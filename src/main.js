@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router"; // Router setup
-import store from "./store"; // Vuex setup
-import "@/assets/styles/tailwind.css"; // Import Tailwind CSS
+import router from "./router";
+import store from "./store";
+import "@/assets/styles/tailwind.css";
 
 const app = createApp(App);
 

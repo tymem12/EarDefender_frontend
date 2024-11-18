@@ -18,7 +18,7 @@
   export default {
     name: "HistoryPage",
     components: {
-      TopBar, // Import TopBar component
+      TopBar,
     },
   };
   </script>

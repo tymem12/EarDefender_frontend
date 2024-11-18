@@ -78,8 +78,8 @@
     name: "TopBar",
     data() {
       return {
-        isDropdownOpen: false, // Controls dropdown visibility
-        isLoggedIn: false, // User's login status
+        isDropdownOpen: false,
+        isLoggedIn: false,
       };
     },
     methods: {
@@ -87,32 +87,29 @@
         this.isDropdownOpen = !this.isDropdownOpen;
       },
       logIn() {
-        // Handle login logic here
-        this.$router.push("/login"); // Redirect to login page
+        this.$router.push("/login");
       },
       signUp() {
-        // Handle signup logic here
-        this.$router.push("/signup"); // Redirect to signup page
+        this.$router.push("/signup");
       },
       logOut() {
         this.isLoggedIn = false;
         alert("You have logged out.");
       },
       navigateToLanding() {
-        this.$router.push("/"); // Redirect to home page
+        this.$router.push("/");
       },
       navigateToAnalysis() {
-        this.$router.push("/analysis"); // Redirect to analysis page
+        this.$router.push("/analysis");
       },
       navigateToHistory() {
-        this.$router.push("/history"); // Redirect to history page
+        this.$router.push("/history");
       },
     },
   };
   </script>
   
   <style>
-  /* Optional global styles for hover effects */
   ul {
     list-style: none;
     padding: 0;

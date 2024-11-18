@@ -8,7 +8,6 @@
         class="mt-6 space-y-4"
         @submit.prevent="handleSignup"
       >
-        <!-- Name Field -->
         <div>
           <label
             for="name"
@@ -23,7 +22,6 @@
             required
           >
         </div>
-        <!-- Email Field -->
         <div>
           <label
             for="email"
@@ -38,7 +36,6 @@
             required
           >
         </div>
-        <!-- Password Field -->
         <div>
           <label
             for="password"
@@ -53,7 +50,6 @@
             required
           >
         </div>
-        <!-- Submit Button -->
         <button 
           type="submit" 
           class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -74,26 +70,36 @@
   </div>
 </template>
   
-  <script>
-  export default {
-    name: "SignupPage",
-    data() {
-      return {
-        name: "",
-        email: "",
-        password: "",
-      };
+<script>
+import axios from '@/axios';
+
+export default {
+  name: "SignupPage",
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async handleSignup() {
+      try {
+        const response = await axios.post('/auth/signup', {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        });
+        console.log('Signup response:', response.data);
+        alert('Account created successfully');
+        this.$router.push("/login");
+      } catch (error) {
+        alert('Signup failed: ' + error.response.data.message);
+      }
     },
-    methods: {
-      handleSignup() {
-        // Mock signup action
-        alert(`Account created for: ${this.email}`);
-        this.$router.push("/"); // Redirect to home page
-      },
-      navigateToLogin() {
-        this.$router.push("/login"); // Redirect to login page
-      },
+    navigateToLogin() {
+      this.$router.push("/login");
     },
-  };
-  </script>
-  
+  },
+};
+</script>

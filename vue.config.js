@@ -7,12 +7,12 @@ module.exports = defineConfig({
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'), // Alias for src directory
+        '@': path.resolve(__dirname, 'src'),
       },
     },
     plugins: [
       new ESLintPlugin({
-        extensions: ['js', 'vue'], // Files to lint
+        extensions: ['js', 'vue'],
       }),
     ],
   },

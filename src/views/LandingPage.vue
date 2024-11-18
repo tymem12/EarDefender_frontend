@@ -27,7 +27,7 @@ import TopBar from "@/components/TopBar.vue";
 export default {
   name: "LandingPage",
   components: {
-    TopBar, // Import TopBar component
+    TopBar,
   },
 };
 </script>
