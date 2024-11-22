@@ -25,7 +25,7 @@
               src="@/assets/settings-icon.png"
               alt="Settings"
               class="h-5 w-5"
-            />
+            >
           </div>
           <!-- Starting Point Input -->
           <input
@@ -35,7 +35,7 @@
             placeholder="Enter starting point URL"
             required
             class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-          />
+          >
         </div>
 
         <!-- Additional Options (Hidden by Default) -->
@@ -44,7 +44,10 @@
             v-if="showSettings"
             class="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
-            <div v-for="(label, field) in settingsFields" :key="field">
+            <div
+              v-for="(label, field) in settingsFields"
+              :key="field"
+            >
               <label
                 :for="field"
                 class="block text-sm font-medium text-gray-700 mb-1"
@@ -60,7 +63,7 @@
                 placeholder="Enter {{ label.toLowerCase() }}"
                 required
                 class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition w-full"
-              />
+              >
             </div>
             <div>
               <label

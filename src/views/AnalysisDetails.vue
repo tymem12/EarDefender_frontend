@@ -5,18 +5,32 @@
 
     <!-- Main Content -->
     <div class="flex flex-col items-center mt-16">
-      <h1 class="text-3xl font-semibold text-gray-800">Analysis Details</h1>
+      <h1 class="text-3xl font-semibold text-gray-800">
+        Analysis Details
+      </h1>
       <div class="w-full max-w-4xl mt-8">
         <!-- Loading and Error States -->
-        <div v-if="loading" class="text-center text-gray-600">Loading...</div>
-        <div v-else-if="error" class="text-center text-red-600">Error: {{ error }}</div>
+        <div
+          v-if="loading"
+          class="text-center text-gray-600"
+        >
+          Loading...
+        </div>
+        <div
+          v-else-if="error"
+          class="text-center text-red-600"
+        >
+          Error: {{ error }}
+        </div>
         <div v-else>
           <!-- General Analysis Information -->
           <div class="bg-white shadow-lg p-6 rounded-lg mb-6">
             <!-- Analysis ID, Status Label, and Timestamp -->
             <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-300">
               <div class="flex items-center space-x-4">
-                <h2 class="text-xl font-bold text-gray-800">{{ analysis.id }}</h2>
+                <h2 class="text-xl font-bold text-gray-800">
+                  {{ analysis.id }}
+                </h2>
                 <span :class="`px-3 py-1 rounded-md font-semibold text-sm ${statusClass}`">
                   {{ analysis.status }}
                 </span>
@@ -46,7 +60,8 @@
                     :href="analysis.inputParams.startingPoint" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    class="text-blue-500 hover:underline">
+                    class="text-blue-500 hover:underline"
+                  >
                     {{ analysis.inputParams.startingPoint }}
                   </a>
                 </p>
@@ -99,7 +114,7 @@ export default {
   },
   computed: {
     statusClass() {
-      if (!this.analysis) return ""; // Handle null analysis gracefully
+      if (!this.analysis) return "";
       switch (this.analysis.status) {
         case "INITIALIZED":
           return "bg-gray-100 text-gray-700";
