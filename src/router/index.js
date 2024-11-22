@@ -8,16 +8,38 @@ import AnalysisDetails from "@/views/AnalysisDetails.vue";
 
 const routes = [
   { path: '/', component: LandingPage },
-  { path: '/analysis', component: AnalysisPage },
+  { 
+    path: '/analysis', 
+    component: AnalysisPage,
+    meta: { requiresAuth: true },
+  },
+  { 
+    path: '/history', 
+    component: HistoryPage,
+    meta: { requiresAuth: true },
+  },
+  { 
+    path: '/analysis/:id', 
+    component: AnalysisDetails,
+    meta: { requiresAuth: true },
+  },
   { path: "/login", component: LoginPage },
   { path: "/signup", component: SignupPage },
-  { path: "/history", component: HistoryPage },
-  { path: "/analysis/:id", component: AnalysisDetails },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('authToken');
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;

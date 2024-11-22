@@ -33,7 +33,14 @@
     </div>
   
     <!-- Profile Avatar with Dropdown -->
-    <div class="ml-auto relative">
+    <div class="ml-auto relative flex items-center space-x-4">
+      <!-- Display nickname if logged in -->
+      <span 
+        v-if="isLoggedIn" 
+        class="text-gray-700 font-medium"
+      >
+        Welcome, {{ nickname }}
+      </span>
       <img
         src="@/assets/profile-avatar.png"
         alt="Profile"
@@ -44,6 +51,7 @@
       <div 
         v-if="isDropdownOpen" 
         class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg"
+        :class="{'top-full': true}"
       >
         <ul>
           <li
@@ -72,52 +80,68 @@
     </div>
   </div>
 </template>
-  
-  <script>
-  export default {
-    name: "TopBar",
-    data() {
-      return {
-        isDropdownOpen: false,
-        isLoggedIn: false,
-      };
+
+<script>
+export default {
+  name: "TopBar",
+  data() {
+    return {
+      isDropdownOpen: false,
+      isLoggedIn: false,
+      nickname: "",
+    };
+  },
+  created() {
+    const token = localStorage.getItem("authToken");
+    const storedNickname = localStorage.getItem("nickname");
+    if (token && storedNickname) {
+      this.isLoggedIn = true;
+      this.nickname = storedNickname;
+    }
+  },
+  methods: {
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
     },
-    methods: {
-      toggleDropdown() {
-        this.isDropdownOpen = !this.isDropdownOpen;
-      },
-      logIn() {
-        this.$router.push("/login");
-      },
-      signUp() {
-        this.$router.push("/signup");
-      },
-      logOut() {
-        this.isLoggedIn = false;
-        alert("You have logged out.");
-      },
-      navigateToLanding() {
-        this.$router.push("/");
-      },
-      navigateToAnalysis() {
-        this.$router.push("/analysis");
-      },
-      navigateToHistory() {
-        this.$router.push("/history");
-      },
+    logIn() {
+      this.$router.push("/login");
     },
-  };
-  </script>
-  
-  <style>
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    transition: background-color 0.2s ease-in-out;
-  }
-  </style>
-  
+    signUp() {
+      this.$router.push("/signup");
+    },
+    logOut() {
+      this.isLoggedIn = false;
+      this.nickname = "";
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("nickname");
+      this.$router.push("/login");
+    },
+    navigateToLanding() {
+      this.$router.push("/");
+    },
+    navigateToAnalysis() {
+      this.$router.push("/analysis");
+    },
+    navigateToHistory() {
+      this.$router.push("/history");
+    },
+  },
+};
+</script>
+
+<style>
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.relative .absolute {
+  top: 100%;
+  z-index: 50;
+}
+</style>
