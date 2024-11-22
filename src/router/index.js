@@ -4,6 +4,7 @@ import AnalysisPage from '@/views/AnalysisPage.vue';
 import LoginPage from "@/views/LoginPage.vue";
 import SignupPage from "@/views/SignupPage.vue";
 import HistoryPage from "@/views/HistoryPage.vue";
+import AnalysisDetails from "@/views/AnalysisDetails.vue";
 
 const routes = [
   { path: '/', component: LandingPage },
@@ -11,6 +12,7 @@ const routes = [
   { path: "/login", component: LoginPage },
   { path: "/signup", component: SignupPage },
   { path: "/history", component: HistoryPage },
+  { path: "/analysis/:id", component: AnalysisDetails },
 ];
 
 const router = createRouter({
