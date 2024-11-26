@@ -8,7 +8,7 @@ export default {
     },
     defaults: {
         depth: 2,
-        maxFiles: 10,
+        maxFiles: 3,
         maxPages: 30,
         maxTimePerFile: 120,
         maxTotalTime: 1200,
