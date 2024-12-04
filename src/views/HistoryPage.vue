@@ -54,31 +54,49 @@ export default {
   data() {
     return {
       analyses: [],
-      loading: true,
       error: null,
+      intervalId: null,
     };
   },
   async created() {
-    try {
-      const token = getToken();
-      if (!token) throw new Error("Authentication token not found");
-
-      const response = await axios.get("/analyses", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      this.analyses = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    } catch (err) {
-      this.error = err.message;
-    } finally {
-      this.loading = false;
-    }
+    await this.fetchAnalyses();
+    this.startAutoRefresh();
+  },
+  beforeUnmount() {
+    this.stopAutoRefresh();
   },
   methods: {
+    async fetchAnalyses() {
+      try {
+        const token = getToken();
+        if (!token) throw new Error("Authentication token not found");
+
+        const response = await axios.get("/analyses", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        
+        this.analyses = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      } catch (err) {
+        this.error = err.message;
+      }
+    },
+    startAutoRefresh() {
+      this.intervalId = setInterval(this.fetchAnalyses, 60000);
+    },
+    stopAutoRefresh() {
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+    },
     redirectToDetails(analysisId) {
       this.$router.push(`/analysis/${analysisId}`);
     },
   },
 };
 </script>
+
+
