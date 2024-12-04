@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       analysis: null,
-      loading: true, // Ensure this is properly toggled
+      loading: true,
       error: null,
       intervalId: null,
     };

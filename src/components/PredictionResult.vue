@@ -148,7 +148,7 @@ export default defineComponent({
       return parseFloat(this.result.score).toFixed(2);
     },
     timestamp() {
-      return new Date().toLocaleString();
+      return new Date(this.result.timestamp).toLocaleString();
     },
     chartData() {
       return {
