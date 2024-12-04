@@ -182,8 +182,8 @@ export default {
           }
         );
 
-        alert("Analysis started successfully");
         console.log("Response:", response.data);
+        this.$router.push("/history");
       } catch (error) {
         console.error("Error starting analysis:", error.response?.data || error.message);
         alert("Failed to start analysis: " + (error.response?.data?.message || error.message));
