@@ -109,8 +109,9 @@ export default {
   data() {
     return {
       analysis: null,
-      loading: true,
+      loading: true, // Ensure this is properly toggled
       error: null,
+      intervalId: null,
     };
   },
   computed: {
@@ -131,22 +132,45 @@ export default {
     },
   },
   async created() {
-    try {
-      const token = getToken();
-      if (!token) throw new Error("Authentication token not found");
+    await this.fetchAnalysisDetails();
+    this.startAutoRefresh();
+  },
+  beforeUnmounted() {
+    this.stopAutoRefresh();
+  },
+  methods: {
+    async fetchAnalysisDetails() {
+      try {
+        this.loading = true;
+        this.error = null;
 
-      const analysisId = this.$route.params.id;
-      const response = await axios.get(`/analyses/${analysisId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      this.analysis = response.data;
-    } catch (err) {
-      this.error = err.message;
-    } finally {
-      this.loading = false;
-    }
+        const token = getToken();
+        if (!token) throw new Error("Authentication token not found");
+
+        const analysisId = this.$route.params.id;
+        const response = await axios.get(`/analyses/${analysisId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        this.analysis = response.data;
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
+    startAutoRefresh() {
+      this.intervalId = setInterval(this.fetchAnalysisDetails, 60000);
+    },
+    stopAutoRefresh() {
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+    },
   },
 };
 </script>
+
