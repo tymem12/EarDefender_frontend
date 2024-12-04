@@ -43,6 +43,7 @@
 import TopBar from "@/components/TopBar.vue";
 import AnalysisItem from "@/components/AnalysisItem.vue";
 import axios from "@/axios";
+import getToken from '@/utils/authUtils';
 
 export default {
   name: "HistoryPage",
@@ -59,7 +60,7 @@ export default {
   },
   async created() {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = getToken();
       if (!token) throw new Error("Authentication token not found");
 
       const response = await axios.get("/analyses", {

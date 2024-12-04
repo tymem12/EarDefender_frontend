@@ -98,6 +98,7 @@
 import TopBar from "@/components/TopBar.vue";
 import PredictionResult from "@/components/PredictionResult.vue";
 import axios from "@/axios";
+import getToken from '@/utils/authUtils';
 
 export default {
   name: "AnalysisDetails",
@@ -131,7 +132,7 @@ export default {
   },
   async created() {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = getToken();
       if (!token) throw new Error("Authentication token not found");
 
       const analysisId = this.$route.params.id;

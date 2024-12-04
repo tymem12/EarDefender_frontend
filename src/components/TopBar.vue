@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import { getToken, getNickname } from '@/utils/authUtils';
+
 export default {
   name: "TopBar",
   data() {
@@ -92,11 +94,15 @@ export default {
     };
   },
   created() {
-    const token = localStorage.getItem("authToken");
-    const storedNickname = localStorage.getItem("nickname");
+    const token = getToken();
+    const storedNickname = getNickname();
+
     if (token && storedNickname) {
       this.isLoggedIn = true;
       this.nickname = storedNickname;
+    } else {
+      this.isLoggedIn = false;
+      this.nickname = null;
     }
   },
   methods: {

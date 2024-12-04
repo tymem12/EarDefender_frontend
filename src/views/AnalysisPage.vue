@@ -106,6 +106,7 @@
 import TopBar from "@/components/TopBar.vue";
 import axios from "@/axios";
 import analysisConfig from "@/config/analysisConfig";
+import getToken from '@/utils/authUtils';
 
 export default {
   name: "AnalysisPage",
@@ -160,7 +161,7 @@ export default {
     },
     async startAnalysis() {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = getToken();
         if (!token) {
           alert("No authentication token found. Please log in.");
           this.$router.push("/login");

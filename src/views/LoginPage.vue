@@ -65,6 +65,7 @@
 <script>
 import axios from '@/axios';
 import TopBar from "@/components/TopBar.vue";
+import { setToken, setNickname } from '@/utils/authUtils';
 
 export default {
   name: "LoginPage",
@@ -85,10 +86,10 @@ export default {
           password: this.password,
         });
         const token = response.data.token;
-
-        localStorage.setItem('authToken', token);
         const nickname = this.email.split('@')[0];
-        localStorage.setItem('nickname', nickname);
+
+        setToken(token)
+        setNickname(nickname)
 
         this.$router.push("/analysis");
       } catch (error) {
