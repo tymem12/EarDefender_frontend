@@ -98,7 +98,7 @@
 import TopBar from "@/components/TopBar.vue";
 import PredictionResult from "@/components/PredictionResult.vue";
 import axios from "@/axios";
-import getToken from '@/utils/authUtils';
+import { getToken } from '@/utils/authUtils';
 
 export default {
   name: "AnalysisDetails",

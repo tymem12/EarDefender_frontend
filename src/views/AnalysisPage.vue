@@ -106,7 +106,7 @@
 import TopBar from "@/components/TopBar.vue";
 import axios from "@/axios";
 import analysisConfig from "@/config/analysisConfig";
-import getToken from '@/utils/authUtils';
+import { getToken } from '@/utils/authUtils';
 
 export default {
   name: "AnalysisPage",
