@@ -18,7 +18,7 @@
         <div class="flex items-center mb-6 space-x-4 justify-center">
           <!-- Settings Icon -->
           <div
-            class="text-white p-2 rounded-full cursor-pointer hover:bg-purple-600 transition"
+            class="text-white p-2 rounded-full cursor-pointer hover:bg-slate-300 transition"
             @click="toggleSettings"
           >
             <img
