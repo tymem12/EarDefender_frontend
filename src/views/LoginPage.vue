@@ -86,16 +86,16 @@ export default {
           password: this.password,
         });
         const token = auth_response.data.token;
-
-        const info_response = await axios.post('/users/me', {
+        console.log(token)
+        const info_response = await axios.get('/users/me', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
         const nickname = info_response.data.fullName;
 
-        setToken(token)
-        setNickname(nickname)
+        setToken(token);
+        setNickname(nickname);
 
         this.$router.push("/analysis");
       } catch (error) {
