@@ -81,12 +81,18 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const response = await axios.post('/auth/login', {
+        const auth_response = await axios.post('/auth/login', {
           email: this.email,
           password: this.password,
         });
-        const token = response.data.token;
-        const nickname = this.email.split('@')[0];
+        const token = auth_response.data.token;
+
+        const info_response = await axios.post('/users/me', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        const nickname = info_response.data.fullName;
 
         setToken(token)
         setNickname(nickname)
