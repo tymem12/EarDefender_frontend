@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white shadow-lg p-6 rounded-lg mb-10" style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
+  <div
+    class="bg-white shadow-lg p-6 rounded-lg mb-10"
+    style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 20px;"
+  >
     <!-- Header -->
     <div class="flex justify-between items-start border-b pb-4 mb-4">
       <!-- Left Column: Details -->
