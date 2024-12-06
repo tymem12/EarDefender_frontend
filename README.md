@@ -1,28 +1,42 @@
-# frontend
+# EarDefender frontend
 
-## Npm Install
+This is the frontend for the EarDefender application, built with Vue.js. It serves as the user interface for interacting with the system, providing tools for audio analysis and verification.
 
-visit https://nodejs.org/en
+## Local run using Docker
 
-## Project setup
+### Build Docker Image
+Use the provided Dockerfile to build a containerized version of the frontend:
+```bash
+docker build -t frontend-app .
 ```
+
+### Run Docker Container
+Run the containerized frontend, exposing it on port `8080`:
+```bash
+docker run -p 8080:8080 frontend-app
+```
+
+## Local run 
+
+### Install Dependencies
+```bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+### Compiles and Hot-Reloads for Development
+```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
+### Compiles and Minifies for Production
+```bash
 npm run build
 ```
 
-### Lints and fixes files
-```
+### Lints and Fixes Files
+```bash
 npm run lint
 ```
 
-### Customize configuration
+### Customize Configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
