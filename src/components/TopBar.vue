@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex items-center px-6 py-3 bg-white shadow-md">
+  <div class="w-full flex items-center px-6 py-3 bg-white shadow-md sticky top-0 z-50">
     <!-- Logo and Navigation -->
     <div class="flex items-center space-x-8">
       <!-- Logo -->
@@ -8,68 +8,68 @@
         alt="Logo"
         class="h-10 cursor-pointer"
         @click="navigateToLanding"
-      >
+      />
       <!-- Navigation Buttons -->
-      <nav class="flex space-x-6">
-        <button 
-          class="text-gray-700 font-medium hover:text-blue-600" 
+      <nav class="hidden md:flex space-x-6">
+        <button
+          class="text-gray-700 font-medium hover:text-blue-600 transition"
           @click="navigateToLanding"
         >
           Home
         </button>
-        <button 
-          class="text-gray-700 font-medium hover:text-blue-600"
+        <button
+          class="text-gray-700 font-medium hover:text-blue-600 transition"
           @click="navigateToAnalysis"
         >
           New Analysis
         </button>
-        <button 
-          class="text-gray-700 font-medium hover:text-blue-600"
+        <button
+          class="text-gray-700 font-medium hover:text-blue-600 transition"
           @click="navigateToHistory"
         >
           History
         </button>
       </nav>
     </div>
-  
+
     <!-- Profile Avatar with Dropdown -->
     <div class="ml-auto relative flex items-center space-x-4">
       <!-- Display nickname if logged in -->
-      <span 
-        v-if="isLoggedIn" 
-        class="text-gray-700 font-medium"
+      <span
+        v-if="isLoggedIn"
+        class="hidden sm:block text-gray-700 font-medium"
       >
         Welcome, {{ nickname }}
       </span>
       <img
         src="@/assets/profile-avatar.png"
         alt="Profile"
-        class="h-10 w-10 rounded-full border border-gray-200 shadow-sm cursor-pointer"
+        class="h-10 w-10 rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-105 transition-transform"
         @click="toggleDropdown"
-      >
+      />
       <!-- Dropdown Menu -->
-      <div 
-        v-if="isDropdownOpen" 
-        class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg"
-        :class="{'top-full': true}"
+      <div
+        v-if="isDropdownOpen"
+        class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg transition-opacity"
+        :class="{ 'opacity-100': isDropdownOpen, 'opacity-0 pointer-events-none': !isDropdownOpen }"
       >
         <ul>
           <li
-            v-if="!isLoggedIn" 
+            v-if="!isLoggedIn"
             class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             @click="logIn"
           >
             Log In
           </li>
           <li
-            v-if="!isLoggedIn" 
+            v-if="!isLoggedIn"
             class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             @click="signUp"
           >
             Sign Up
           </li>
           <li
-            v-if="isLoggedIn" 
+            v-if="isLoggedIn"
             class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             @click="logOut"
           >
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { getToken, getNickname } from '@/utils/authUtils';
+import { getToken, getNickname } from "@/utils/authUtils";
 
 export default {
   name: "TopBar",
@@ -135,7 +135,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 ul {
   list-style: none;
   padding: 0;

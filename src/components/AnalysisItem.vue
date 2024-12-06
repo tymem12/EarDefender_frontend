@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow p-6 rounded-lg">
+  <div class="bg-white shadow-md p-6 rounded-lg transition-transform hover:scale-105 hover:shadow-lg">
     <!-- First Row: ID and Status -->
     <div class="flex justify-between items-center mb-4">
       <!-- Left Section -->
@@ -19,10 +19,8 @@
 
       <!-- Right Section: Timestamp -->
       <div class="text-right">
-        <p class="text-sm text-gray-600">
-          <span class="font-semibold">
-            {{ new Date(analysis.timestamp).toLocaleString() }}
-          </span>
+        <p class="text-sm text-gray-500">
+          {{ formattedTimestamp }}
         </p>
       </div>
     </div>
@@ -34,21 +32,21 @@
         <!-- File Count -->
         <p class="text-sm text-gray-600">
           <span class="font-semibold">File Count:</span>
-          {{ analysis.fileCount ?? 'N/A' }}
+          {{ analysis.fileCount ?? "N/A" }}
         </p>
         <!-- Deepfake File Count -->
         <p class="text-sm text-gray-600">
           <span class="font-semibold">Deepfake File Count:</span>
-          {{ analysis.deepfakeFileCount ?? 'N/A' }}
+          {{ analysis.deepfakeFileCount ?? "N/A" }}
         </p>
       </div>
 
       <!-- Details Button -->
       <button
-        class="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg hover:bg-blue-600 transition"
+        class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         @click="$emit('view-details', analysis.id)"
       >
-        Details
+        View Details
       </button>
     </div>
   </div>
@@ -78,6 +76,16 @@ export default {
           return "bg-red-100 text-red-700";
       }
     },
+    formattedTimestamp() {
+      return new Date(this.analysis.timestamp).toLocaleString();
+    },
   },
 };
 </script>
+
+<style scoped>
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+</style>
