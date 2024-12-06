@@ -1,57 +1,64 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
+  <div class="min-h-screen bg-gradient-to-b from-gray-100 to-gray-50 flex flex-col">
     <!-- TopBar Component -->
     <TopBar />
 
     <!-- Login Form -->
     <div class="flex items-center justify-center flex-grow">
-      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-2xl font-semibold text-center text-gray-800">
-          Log In
+      <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-extrabold text-center text-gray-800">
+          Welcome Back
         </h2>
+        <p class="text-gray-600 text-center mt-2">
+          Please log in to continue to your account.
+        </p>
         <form
-          class="mt-6 space-y-4"
+          class="mt-6 space-y-6"
           @submit.prevent="handleLogin"
         >
           <div>
             <label
               for="email"
               class="block text-sm font-medium text-gray-700"
-            >Email</label>
-            <input 
-              id="email" 
-              v-model="email" 
-              type="email" 
-              class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              class="w-full mt-2 px-4 py-3 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition"
               placeholder="Enter your email"
               required
-            >
+            />
           </div>
           <div>
             <label
               for="password"
               class="block text-sm font-medium text-gray-700"
-            >Password</label>
-            <input 
-              id="password" 
-              v-model="password" 
-              type="password" 
-              class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              v-model="password"
+              type="password"
+              class="w-full mt-2 px-4 py-3 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition"
               placeholder="Enter your password"
               required
-            >
+            />
           </div>
-          <button 
-            type="submit" 
-            class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          <button
+            type="submit"
+            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           >
             Log In
           </button>
         </form>
-        <p class="text-sm text-center mt-4 text-gray-600">
-          Don't have an account? 
-          <a 
-            class="text-blue-600 hover:underline cursor-pointer" 
+        <p class="text-sm text-center mt-6 text-gray-600">
+          Don’t have an account?
+          <a
+            class="text-blue-600 font-semibold hover:underline cursor-pointer"
             @click="navigateToSignup"
           >
             Sign Up
@@ -63,8 +70,9 @@
 </template>
 
 <script>
-import axios from '@/axios';
+import axios from "@/axios";
 import TopBar from "@/components/TopBar.vue";
+import { setToken, setNickname } from "@/utils/authUtils";
 
 export default {
   name: "LoginPage",
@@ -80,19 +88,25 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const response = await axios.post('/auth/login', {
+        const authResponse = await axios.post("/auth/login", {
           email: this.email,
           password: this.password,
         });
-        const token = response.data.token;
+        const token = authResponse.data.token;
 
-        localStorage.setItem('authToken', token);
-        const nickname = this.email.split('@')[0];
-        localStorage.setItem('nickname', nickname);
+        const infoResponse = await axios.get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const nickname = infoResponse.data.fullName;
+
+        setToken(token);
+        setNickname(nickname);
 
         this.$router.push("/analysis");
       } catch (error) {
-        alert('Login failed: ' + (error.response?.data?.message || error.message));
+        alert("Login failed: " + (error.response?.data?.message || error.message));
       }
     },
     navigateToSignup() {
@@ -101,3 +115,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+input:focus,
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+</style>

@@ -1,32 +1,33 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
+  <div class="min-h-screen bg-gradient-to-b from-gray-100 to-gray-50 flex flex-col">
     <!-- TopBar Component -->
     <TopBar />
 
     <!-- Content -->
-    <div class="flex-grow flex items-center justify-center px-4">
+    <div class="flex-grow flex items-center justify-center px-6">
       <form
-        class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl"
+        class="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl space-y-6"
         @submit.prevent="validateAndSubmit"
       >
         <!-- Header -->
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <h2 class="text-3xl font-extrabold text-gray-800 text-center">
           Start New Analysis
         </h2>
 
         <!-- Input Section -->
-        <div class="flex items-center mb-6 space-x-4 justify-center">
+        <div class="flex items-center space-x-4 justify-center">
           <!-- Settings Icon -->
-          <div
-            class="text-white p-2 rounded-full cursor-pointer hover:bg-purple-600 transition"
+          <button
+            type="button"
+            class="text-gray-500 p-3 rounded-full hover:bg-gray-200 transition"
             @click="toggleSettings"
           >
             <img
               src="@/assets/settings-icon.png"
               alt="Settings"
               class="h-5 w-5"
-            >
-          </div>
+            />
+          </button>
           <!-- Starting Point Input -->
           <input
             id="startingPoint"
@@ -34,23 +35,21 @@
             type="url"
             placeholder="Enter starting point URL"
             required
-            class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-          >
+            class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          />
         </div>
 
         <!-- Additional Options (Hidden by Default) -->
         <transition name="fade">
-          <div
-            v-if="showSettings"
-            class="grid grid-cols-1 md:grid-cols-2 gap-4"
-          >
+          <div v-if="showSettings" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div
               v-for="(label, field) in settingsFields"
               :key="field"
+              class="space-y-2"
             >
               <label
                 :for="field"
-                class="block text-sm font-medium text-gray-700 mb-1"
+                class="block text-sm font-semibold text-gray-700"
               >
                 {{ label }}
               </label>
@@ -62,13 +61,13 @@
                 :max="limits[field]?.max"
                 placeholder="Enter {{ label.toLowerCase() }}"
                 required
-                class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition w-full"
-              >
+                class="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
+              />
             </div>
-            <div>
+            <div class="space-y-2">
               <label
                 for="model"
-                class="block text-sm font-medium text-gray-700 mb-1"
+                class="block text-sm font-semibold text-gray-700"
               >
                 Model
               </label>
@@ -76,7 +75,7 @@
                 id="model"
                 v-model="model"
                 required
-                class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition w-full"
+                class="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
               >
                 <option
                   v-for="modelOption in models"
@@ -93,7 +92,7 @@
         <!-- Submit Button -->
         <button
           type="submit"
-          class="mt-8 w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         >
           Start Analysis
         </button>
@@ -106,6 +105,7 @@
 import TopBar from "@/components/TopBar.vue";
 import axios from "@/axios";
 import analysisConfig from "@/config/analysisConfig";
+import { getToken } from "@/utils/authUtils";
 
 export default {
   name: "AnalysisPage",
@@ -160,7 +160,7 @@ export default {
     },
     async startAnalysis() {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = getToken();
         if (!token) {
           alert("No authentication token found. Please log in.");
           this.$router.push("/login");
@@ -181,8 +181,8 @@ export default {
           }
         );
 
-        alert("Analysis started successfully");
         console.log("Response:", response.data);
+        this.$router.push("/history");
       } catch (error) {
         console.error("Error starting analysis:", error.response?.data || error.message);
         alert("Failed to start analysis: " + (error.response?.data?.message || error.message));
