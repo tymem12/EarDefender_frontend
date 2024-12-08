@@ -1,82 +1,135 @@
 <template>
-  <div class="w-full flex items-center px-6 py-3 bg-white shadow-md sticky top-0 z-50">
-    <!-- Logo and Navigation -->
-    <div class="flex items-center space-x-8">
+  <div class="w-full bg-white shadow-md sticky top-0 z-50">
+    <div class="flex items-center justify-between px-6 py-3">
       <!-- Logo -->
-      <img
-        src="@/assets/logo.png"
-        alt="Logo"
-        class="h-10 cursor-pointer"
-        @click="navigateToLanding"
-      />
-      <!-- Navigation Buttons -->
-      <nav class="hidden md:flex space-x-6">
+      <div class="flex items-center space-x-8">
+        <img
+          src="@/assets/logo.png"
+          alt="Logo"
+          class="h-10 cursor-pointer"
+          @click="navigateToLanding"
+        />
+
+        <!-- Navigation Buttons for Desktop -->
+        <nav class="hidden md:flex space-x-6">
+          <button
+            class="text-gray-700 font-medium hover:text-blue-600 transition"
+            @click="navigateToLanding"
+          >
+            Home
+          </button>
+          <button
+            class="text-gray-700 font-medium hover:text-blue-600 transition"
+            @click="navigateToAnalysis"
+          >
+            New Analysis
+          </button>
+          <button
+            class="text-gray-700 font-medium hover:text-blue-600 transition"
+            @click="navigateToHistory"
+          >
+            History
+          </button>
+        </nav>
+      </div>
+
+      <!-- Profile Avatar for Desktop -->
+      <div class="hidden md:flex items-center space-x-4">
+        <span
+          v-if="isLoggedIn"
+          class="text-gray-700 font-medium"
+        >
+          Welcome, {{ nickname }}
+        </span>
+        <img
+          src="@/assets/profile-avatar.png"
+          alt="Profile"
+          class="h-10 w-10 rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-105 transition-transform"
+          @click="toggleDropdown"
+        />
+      </div>
+
+      <!-- Hamburger Menu Button for Mobile -->
+      <button
+        class="md:hidden text-gray-700 focus:outline-none"
+        @click="toggleMobileMenu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      v-if="isMobileMenuOpen"
+      class="md:hidden bg-white shadow-lg border-t"
+    >
+      <nav class="flex flex-col space-y-2 px-6 py-4">
         <button
-          class="text-gray-700 font-medium hover:text-blue-600 transition"
+          class="text-gray-700 font-medium hover:text-blue-600 transition text-left"
           @click="navigateToLanding"
         >
           Home
         </button>
         <button
-          class="text-gray-700 font-medium hover:text-blue-600 transition"
+          class="text-gray-700 font-medium hover:text-blue-600 transition text-left"
           @click="navigateToAnalysis"
         >
           New Analysis
         </button>
         <button
-          class="text-gray-700 font-medium hover:text-blue-600 transition"
+          class="text-gray-700 font-medium hover:text-blue-600 transition text-left"
           @click="navigateToHistory"
         >
           History
         </button>
+        <button
+          v-if="!isLoggedIn"
+          class="text-blue-600 font-medium hover:text-blue-700 transition text-left"
+          @click="logIn"
+        >
+          Log In
+        </button>
+        <button
+          v-if="isLoggedIn"
+          class="text-red-600 font-medium hover:text-red-700 transition text-left"
+          @click="logOut"
+        >
+          Log Out
+        </button>
       </nav>
     </div>
 
-    <!-- Profile Avatar with Dropdown -->
-    <div class="ml-auto relative flex items-center space-x-4">
-      <!-- Display nickname if logged in -->
-      <span
-        v-if="isLoggedIn"
-        class="hidden sm:block text-gray-700 font-medium"
-      >
-        Welcome, {{ nickname }}
-      </span>
-      <img
-        src="@/assets/profile-avatar.png"
-        alt="Profile"
-        class="h-10 w-10 rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-105 transition-transform"
-        @click="toggleDropdown"
-      />
-      <!-- Dropdown Menu -->
-      <div
-        v-if="isDropdownOpen"
-        class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg transition-opacity"
-        :class="{ 'opacity-100': isDropdownOpen, 'opacity-0 pointer-events-none': !isDropdownOpen }"
-      >
-        <ul>
-          <li
-            v-if="!isLoggedIn"
-            class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            @click="logIn"
-          >
-            Log In
-          </li>
-          <li
-            v-if="!isLoggedIn"
-            class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            @click="signUp"
-          >
-            Sign Up
-          </li>
-          <li
-            v-if="isLoggedIn"
-            class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            @click="logOut"
-          >
-            Log Out
-          </li>
-        </ul>
-      </div>
+    <!-- Profile Dropdown -->
+    <div
+      v-if="isDropdownOpen"
+      class="absolute right-6 mt-2 w-40 bg-white shadow-lg rounded-lg transition-opacity z-50"
+      :class="{ 'opacity-100': isDropdownOpen, 'opacity-0 pointer-events-none': !isDropdownOpen }"
+    >
+      <ul>
+        <li
+          v-if="!isLoggedIn"
+          class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          @click="logIn"
+        >
+          Log In
+        </li>
+        <li
+          v-if="!isLoggedIn"
+          class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          @click="signUp"
+        >
+          Sign Up
+        </li>
+        <li
+          v-if="isLoggedIn"
+          class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          @click="logOut"
+        >
+          Log Out
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -89,6 +142,7 @@ export default {
   data() {
     return {
       isDropdownOpen: false,
+      isMobileMenuOpen: false,
       isLoggedIn: false,
       nickname: "",
     };
@@ -108,6 +162,9 @@ export default {
   methods: {
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
+    },
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
     },
     logIn() {
       this.$router.push("/login");
