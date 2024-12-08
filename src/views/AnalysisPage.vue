@@ -15,28 +15,38 @@
         </h2>
 
         <!-- Input Section -->
-        <div class="flex items-center space-x-4 justify-center">
-          <!-- Settings Icon -->
-          <button
-            type="button"
-            class="text-gray-500 p-3 rounded-full hover:bg-gray-200 transition"
-            @click="toggleSettings"
-          >
-            <img
-              src="@/assets/settings-icon.png"
-              alt="Settings"
-              class="h-5 w-5"
+        <div class="space-y-4">
+          <div class="flex items-center space-x-4 justify-between w-full">
+            <!-- Settings Icon -->
+            <button
+              type="button"
+              class="text-gray-500 p-3 rounded-full hover:bg-gray-200 transition flex-shrink-0"
+              @click="toggleSettings"
+            >
+              <img
+                src="@/assets/settings-icon.png"
+                alt="Settings"
+                class="h-5 w-5"
+              />
+            </button>
+            <!-- Starting Point Input -->
+            <input
+              id="startingPoint"
+              v-model="startingPoint"
+              type="url"
+              placeholder="Enter starting point URL"
+              required
+              class="flex-grow max-w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          >
+            Start Analysis
           </button>
-          <!-- Starting Point Input -->
-          <input
-            id="startingPoint"
-            v-model="startingPoint"
-            type="url"
-            placeholder="Enter starting point URL"
-            required
-            class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-          />
         </div>
 
         <!-- Additional Options (Hidden by Default) -->
@@ -88,14 +98,6 @@
             </div>
           </div>
         </transition>
-
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-        >
-          Start Analysis
-        </button>
       </form>
     </div>
   </div>
