@@ -1,7 +1,10 @@
 <template>
-  <div class="bg-white shadow-md p-6 rounded-lg mb-8 max-w-5xl mx-auto" style="width: 90%">
+  <div
+    class="bg-white shadow-md p-6 rounded-lg mb-8 max-w-5xl mx-auto"
+    style="width: 90%"
+  >
     <!-- Header -->
-    <div class="flex justify-between items-start border-b pb-4 mb-4">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b pb-4 mb-4 space-y-4 sm:space-y-0">
       <!-- Left Column: Details -->
       <div class="text-left">
         <div class="flex items-center">
@@ -20,7 +23,7 @@
           <a
             :href="result.link"
             target="_blank"
-            class="text-blue-500 hover:underline"
+            class="text-blue-500 hover:underline break-all"
           >
             {{ result.link }}
           </a>
@@ -30,7 +33,7 @@
         </p>
       </div>
       <!-- Right Column: Timestamp -->
-      <div class="text-right">
+      <div class="text-center sm:text-right">
         <p class="text-sm text-gray-600 font-medium">
           {{ timestamp }}
         </p>

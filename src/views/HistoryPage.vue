@@ -23,7 +23,10 @@
         >
           <span class="animate-pulse">Loading...</span>
         </div>
-        <div v-else class="space-y-4">
+        <div
+          v-else
+          class="space-y-4"
+        >
           <AnalysisItem
             v-for="analysis in analyses"
             :key="analysis.id"

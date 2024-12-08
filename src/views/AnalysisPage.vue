@@ -27,7 +27,7 @@
                 src="@/assets/settings-icon.png"
                 alt="Settings"
                 class="h-5 w-5"
-              />
+              >
             </button>
             <!-- Starting Point Input -->
             <input
@@ -37,7 +37,7 @@
               placeholder="Enter starting point URL"
               required
               class="flex-grow max-w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-            />
+            >
           </div>
 
           <!-- Submit Button -->
@@ -51,7 +51,10 @@
 
         <!-- Additional Options (Hidden by Default) -->
         <transition name="fade">
-          <div v-if="showSettings" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            v-if="showSettings"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
             <div
               v-for="(label, field) in settingsFields"
               :key="field"
@@ -72,7 +75,7 @@
                 placeholder="Enter {{ label.toLowerCase() }}"
                 required
                 class="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
-              />
+              >
             </div>
             <div class="space-y-2">
               <label

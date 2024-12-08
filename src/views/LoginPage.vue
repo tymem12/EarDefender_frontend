@@ -30,7 +30,7 @@
               class="w-full mt-2 px-4 py-3 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition"
               placeholder="Enter your email"
               required
-            />
+            >
           </div>
           <div>
             <label
@@ -46,7 +46,7 @@
               class="w-full mt-2 px-4 py-3 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition"
               placeholder="Enter your password"
               required
-            />
+            >
           </div>
           <button
             type="submit"

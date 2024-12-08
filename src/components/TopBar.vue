@@ -8,7 +8,7 @@
           alt="Logo"
           class="h-10 cursor-pointer"
           @click="navigateToLanding"
-        />
+        >
 
         <!-- Navigation Buttons for Desktop -->
         <nav class="hidden md:flex space-x-6">
@@ -46,7 +46,7 @@
           alt="Profile"
           class="h-10 w-10 rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-105 transition-transform"
           @click="toggleDropdown"
-        />
+        >
       </div>
 
       <!-- Hamburger Menu Button for Mobile -->
@@ -54,8 +54,19 @@
         class="md:hidden text-gray-700 focus:outline-none"
         @click="toggleMobileMenu"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"
+          />
         </svg>
       </button>
     </div>
