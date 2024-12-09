@@ -8,7 +8,8 @@
       <img
         src="@/assets/logo.png"
         alt="Shield Logo"
-        class="w-36 h-36 mb-6 rounded-full border-4 border-white shadow-lg hover:scale-105 transition-transform duration-300"
+        class="w-36 h-36 mb-6 rounded-full border-4 border-ligtgrey shadow-lg hover:scale-105 transition-transform duration-300"
+        style="background-color: white;"
       >
       <h1 class="text-5xl font-extrabold mb-6 tracking-tight">
         Welcome to EarDefender
