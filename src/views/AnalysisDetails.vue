@@ -111,6 +111,8 @@
               v-for="result in analysis.predictionResults"
               :key="result.link"
               :result="result"
+              :open="isDetailOpen(result.link)"
+              @toggle="toggleDetail(result.link)"
             />
           </div>
         </div>
@@ -137,6 +139,8 @@ export default {
       loading: true,
       error: null,
       intervalId: null,
+      openedDetails: new Set(),
+      scrollTop: null,
     };
   },
   computed: {
@@ -164,11 +168,27 @@ export default {
     this.stopAutoRefresh();
   },
   methods: {
+    isDetailOpen(link) {
+      return this.openedDetails.has(link);
+    },
+    toggleDetail(link) {
+      if (this.openedDetails.has(link)) {
+        this.openedDetails.delete(link);
+      } else {
+        this.openedDetails.add(link);
+      }
+    },
+    saveScrollPosition() {
+      this.scrollTop = window.scrollY || document.documentElement.scrollTop;
+    },
+    restoreScrollPosition() {
+      if (this.scrollTop !== null) {
+        window.scrollTo(0, this.scrollTop);
+      }
+    },
     async fetchAnalysisDetails() {
       try {
-        this.loading = true;
-        this.error = null;
-
+        this.saveScrollPosition();
         const token = getToken();
         if (!token) throw new Error("Authentication token not found");
 
@@ -179,7 +199,12 @@ export default {
           },
         });
 
-        this.analysis = response.data;
+        if (this.analysis) {
+          Object.assign(this.analysis, response.data);
+        } else {
+          this.analysis = response.data;
+        }
+        this.restoreScrollPosition();
       } catch (err) {
         this.error = err.message;
       } finally {
