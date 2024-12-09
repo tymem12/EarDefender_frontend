@@ -1,7 +1,10 @@
 <template>
-  <div class="bg-white shadow-md p-6 rounded-lg mb-8 max-w-5xl mx-auto" style="width: 90%">
+  <div
+    class="bg-white shadow-md p-6 rounded-lg mb-8 max-w-5xl mx-auto"
+    style="width: 90%"
+  >
     <!-- Header -->
-    <div class="flex justify-between items-start border-b pb-4 mb-4">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b pb-4 mb-4 space-y-4 sm:space-y-0">
       <!-- Left Column: Details -->
       <div class="text-left">
         <div class="flex items-center">
@@ -20,7 +23,7 @@
           <a
             :href="result.link"
             target="_blank"
-            class="text-blue-500 hover:underline"
+            class="text-blue-500 hover:underline break-all"
           >
             {{ result.link }}
           </a>
@@ -30,7 +33,7 @@
         </p>
       </div>
       <!-- Right Column: Timestamp -->
-      <div class="text-right">
+      <div class="text-center sm:text-right">
         <p class="text-sm text-gray-600 font-medium">
           {{ timestamp }}
         </p>
@@ -143,6 +146,7 @@ export default defineComponent({
   data() {
     return {
       showTable: false,
+      tickSpacing: 5,
     };
   },
   computed: {
@@ -154,8 +158,8 @@ export default defineComponent({
     },
     chartData() {
       return {
-        labels: this.result.modelPredictions.map(
-          (segment) => `Segment ${segment.segmentNumber}`
+        labels: this.result.modelPredictions.map((segment) =>
+          this.formatShortTime(segment.segmentNumber * 4)
         ),
         datasets: [
           {
@@ -192,7 +196,14 @@ export default defineComponent({
         scales: {
           x: {
             ticks: {
-              display: false,
+              callback: (value, index) => {
+                return index % this.tickSpacing === 0
+                  ? this.formatShortTime(index * 4)
+                  : null;
+              },
+              font: {
+                size: 10,
+              },
             },
             grid: {
               display: false,
@@ -214,6 +225,11 @@ export default defineComponent({
       const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
       const secs = String(seconds % 60).padStart(2, "0");
       return `${hours}:${minutes}:${secs}`;
+    },
+    formatShortTime(seconds) {
+      const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      return `${minutes}:${secs}`;
     },
   },
 });

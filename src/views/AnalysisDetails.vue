@@ -10,19 +10,25 @@
       </h1>
       <div class="w-full max-w-4xl mt-8">
         <!-- Loading and Error States -->
-        <div v-if="loading" class="text-center text-gray-600 p-6">
+        <div
+          v-if="loading"
+          class="text-center text-gray-600 p-6"
+        >
           <span class="animate-pulse">Loading...</span>
         </div>
-        <div v-else-if="error" class="text-center text-red-600 bg-red-100 p-4 rounded-lg">
+        <div
+          v-else-if="error"
+          class="text-center text-red-600 bg-red-100 p-4 rounded-lg"
+        >
           Error: {{ error }}
         </div>
         <div v-else>
           <!-- General Analysis Information -->
           <div class="bg-white shadow-md p-6 rounded-lg mb-6">
             <!-- Analysis ID, Status Label, and Timestamp -->
-            <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-300">
-              <div class="flex items-center space-x-4">
-                <h2 class="text-xl font-bold text-gray-800">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-4 mb-4 border-b border-gray-300 space-y-4 sm:space-y-0">
+              <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <h2 class="text-xl font-bold text-gray-800 break-words">
                   {{ analysis.id }}
                 </h2>
                 <span
@@ -31,13 +37,13 @@
                   {{ analysis.status }}
                 </span>
               </div>
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-500 text-center sm:text-right">
                 {{ new Date(analysis.timestamp).toLocaleString() }}
               </p>
             </div>
 
             <!-- File Counts Section -->
-            <div class="grid grid-cols-2 gap-x-8 text-sm text-gray-600 pb-4 mb-4 border-b border-gray-300">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-0 sm:gap-x-8 text-sm text-gray-600 pb-4 mb-4 border-b border-gray-300">
               <div>
                 <p>
                   <span class="font-semibold">File Count:</span>
@@ -53,7 +59,7 @@
             </div>
 
             <!-- Input Parameters Section -->
-            <div class="grid grid-cols-2 gap-x-8 text-sm text-gray-600">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-0 sm:gap-x-8 text-sm text-gray-600">
               <!-- Left Column -->
               <div>
                 <p>
@@ -62,7 +68,7 @@
                     :href="analysis.inputParams.startingPoint"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-blue-500 hover:underline"
+                    class="text-blue-500 hover:underline break-words"
                   >
                     {{ analysis.inputParams.startingPoint }}
                   </a>
