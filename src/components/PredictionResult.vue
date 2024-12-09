@@ -146,6 +146,7 @@ export default defineComponent({
   data() {
     return {
       showTable: false,
+      tickSpacing: 5,
     };
   },
   computed: {
@@ -157,8 +158,8 @@ export default defineComponent({
     },
     chartData() {
       return {
-        labels: this.result.modelPredictions.map(
-          (segment) => `Segment ${segment.segmentNumber}`
+        labels: this.result.modelPredictions.map((segment) =>
+          this.formatShortTime(segment.segmentNumber * 4)
         ),
         datasets: [
           {
@@ -195,7 +196,14 @@ export default defineComponent({
         scales: {
           x: {
             ticks: {
-              display: false,
+              callback: (value, index) => {
+                return index % this.tickSpacing === 0
+                  ? this.formatShortTime(index * 4)
+                  : null;
+              },
+              font: {
+                size: 10,
+              },
             },
             grid: {
               display: false,
@@ -217,6 +225,11 @@ export default defineComponent({
       const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
       const secs = String(seconds % 60).padStart(2, "0");
       return `${hours}:${minutes}:${secs}`;
+    },
+    formatShortTime(seconds) {
+      const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      return `${minutes}:${secs}`;
     },
   },
 });
