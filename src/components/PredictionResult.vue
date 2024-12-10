@@ -23,7 +23,7 @@
           <a
             :href="result.link"
             target="_blank"
-            class="text-blue-500 hover:underline break-all"
+            class="text-blue-500 hover:underline break-all whitespace-normal"
           >
             {{ result.link }}
           </a>
@@ -253,4 +253,11 @@ table {
 .fade-leave-to {
   opacity: 0;
 }
+a {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
 </style>
