@@ -36,7 +36,7 @@
               type="url"
               placeholder="Enter starting point URL"
               required
-              class="flex-grow max-w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              class="flex-grow max-w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition truncate"
             >
           </div>
 
@@ -72,7 +72,7 @@
                 :type="getInputType(field)"
                 :min="limits[field]?.min"
                 :max="limits[field]?.max"
-                placeholder="Enter {{ label.toLowerCase() }}"
+                :placeholder="'Enter ' + label.toLowerCase()"
                 required
                 class="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
               >
@@ -160,7 +160,6 @@ export default {
           return;
         }
       }
-
       this.startAnalysis();
     },
     async startAnalysis() {
@@ -198,12 +197,21 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease-in-out;
+#startingPoint {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+
+#startingPoint::placeholder {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+.flex-grow {
+  min-width: 0;
 }
 </style>
+
